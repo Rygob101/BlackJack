@@ -22,8 +22,10 @@ public class CardManager {
 	public Player player = new Player();
 	public Dealer dealer = new Dealer();
 	public Card[] cards;
-	public Deck deck = new Deck();
+	public Deck deck;
 	public Font customFont;
+	public int playerOffset;
+	public int dealerOffset;
 	public int scale = 3;
 	public int cardHeight = 52 * scale;
 	public int cardWidth = 37 * scale;
@@ -41,6 +43,7 @@ public class CardManager {
 		
 		cards = new Card[54];
 		loadCards();
+		
 		setSlots(player, player.handX, player.handY);
 		setSlots(dealer, dealer.handX, dealer.handY);
 	}
@@ -51,16 +54,16 @@ public class CardManager {
 		player.slots[0].x = handX;
 		player.slots[1] = new Slot();
 		player.slots[1].y = handY;
-		player.slots[1].x = handX+60;
+		player.slots[1].x = handX + 60;
 		player.slots[2] = new Slot();
 		player.slots[2].y = handY;
-		player.slots[2].x = handX+120;
+		player.slots[2].x = handX + 120;
 		player.slots[3] = new Slot();
 		player.slots[3].y = handY;
-		player.slots[3].x = handX+180;
+		player.slots[3].x = handX + 180;
 		player.slots[4] = new Slot();
 		player.slots[4].y = handY;
-		player.slots[4].x = handX+240;
+		player.slots[4].x = handX + 240;
 	}
 	
 	public void setup(int index, String imagePath, int value) {
@@ -148,26 +151,24 @@ public class CardManager {
 	}
 	
 	public int getScore(PlayersSuper player) {
-		int numAces = 0;
 		int score = 0;
 		for(int i = 0; i < player.slots.length; i++) {
-			if(player.slots[i] != null && player.slots[i].cardNum != 53) {
+			if(player.slots[i].cardNum != 0 && player.slots[i].cardNum != 53) {
 				score += cards[player.slots[i].cardNum].value;
 				if(player.slots[i].cardNum == 1 || player.slots[i].cardNum == 14 
 						|| player.slots[i].cardNum == 27 || player.slots[i].cardNum == 40) {
-					numAces++;
 					if(score > 21) {
 						score -= 10;
 					}
 				}
 			}
 		}
-		while (numAces > 0) {
-			if(score > 21) {
-				score -= 10;
-				numAces--;
-			}
-		}
+//		while (numAces > 0) {
+//			if(score > 21) {
+//				score -= 10;
+//				numAces--;
+//			}
+//		}
 		return score;
 	}
 	
@@ -205,5 +206,21 @@ public class CardManager {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 		int x = 1000/2 - length/2;
 		return x;
+	}
+	
+	public void updateSlotPosition(PlayersSuper player, int offset) {
+		player.slots[0].x -= offset;
+		player.slots[1].x -= offset;
+		player.slots[2].x -= offset;
+		player.slots[3].x -= offset;
+		player.slots[4].x -= offset;
+	}
+	
+	public void resetSlotPositions(PlayersSuper player, int handX) {
+		player.slots[0].x = handX;
+		player.slots[1].x = handX + 60;
+		player.slots[2].x = handX + 120;
+		player.slots[3].x = handX + 180;
+		player.slots[4].x = handX + 240;
 	}
 }

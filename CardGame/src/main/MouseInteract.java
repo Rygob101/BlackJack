@@ -29,6 +29,9 @@ public class MouseInteract extends JComponent implements MouseListener{
 		}else if ((mouseX > gs.buttonM.sb.x && mouseX < (gs.buttonM.sb.x + gs.buttonM.sb.width)) 
 				&& (mouseY > gs.buttonM.sb.y && mouseY < (gs.buttonM.sb.y + gs.buttonM.sb.height))) {
 			gs.playerStand();
+		}else if ((mouseX > 0 && mouseX < 50) 
+				&& (mouseY > 0 && mouseY < 50)) {
+			gs.runHand();
 		}
 		System.out.println("Mouse Clicked!");
 	}

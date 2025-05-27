@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import buttons.ButtonManager;
 import cards.CardManager;
+import cards.Deck;
 
 @SuppressWarnings("serial")
 public class GameScreen extends JPanel{
@@ -34,24 +35,7 @@ public class GameScreen extends JPanel{
 		this.setDoubleBuffered(true);
 		this.setFocusable(true);
 		
-		cardM.player.slots[0].cardNum = cardM.deck.drawCard();
-		cardM.player.slots[1].cardNum = cardM.deck.drawCard();
-
-		
-		cardM.dealer.slots[0].cardNum = cardM.deck.drawCard();
-		cardM.dealer.slots[1].cardNum = 0;
-		
-		repaint();
-		
-//		while(true) {
-//			if(buttonSelected != 0) {
-//				switch (buttonSelected) {
-//				case 1:
-//					playerHit(playerSlot);
-//					playerSlot++;
-//				}
-//			}
-//		}
+		runHand();
 		
 	}
 	
@@ -78,6 +62,8 @@ public class GameScreen extends JPanel{
 	}
 	public void playerHit(int slot){
 		cardM.player.slots[slot].cardNum = cardM.deck.drawCard();
+		cardM.playerOffset += 20;
+		cardM.updateSlotPosition(cardM.player, 25);
 		repaint();
 		playerSlot++;
 	}
@@ -85,8 +71,35 @@ public class GameScreen extends JPanel{
 		int slot = 1;
 		while(cardM.getDealerScore() < 17) {
 			cardM.dealer.slots[slot].cardNum = cardM.deck.drawCard();
+			cardM.dealerOffset += 20;
+			if(slot > 1) {
+				cardM.updateSlotPosition(cardM.dealer, 25);
+			}
 			slot++;
 			repaint();
 		}
+	}
+	public void runHand() {
+		
+		cardM.deck = new Deck();
+		playerSlot = 2;
+		cardM.playerOffset = 0;
+		cardM.dealerOffset = 0;
+		cardM.resetSlotPositions(cardM.player, cardM.player.handX);
+		cardM.resetSlotPositions(cardM.dealer, cardM.dealer.handX);
+		
+		cardM.player.slots[0].cardNum = cardM.deck.drawCard();
+		cardM.player.slots[1].cardNum = cardM.deck.drawCard();
+		cardM.player.slots[2].cardNum = 53;
+		cardM.player.slots[3].cardNum = 53;
+		cardM.player.slots[4].cardNum = 53;
+
+		cardM.dealer.slots[0].cardNum = cardM.deck.drawCard();
+		cardM.dealer.slots[1].cardNum = 0;
+		cardM.dealer.slots[2].cardNum = 53;
+		cardM.dealer.slots[3].cardNum = 53;
+		cardM.dealer.slots[4].cardNum = 53;
+		
+		repaint();
 	}
 }
