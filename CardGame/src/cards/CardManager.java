@@ -147,8 +147,7 @@ public class CardManager {
 		
 	}
 	
-	public int getPlayerScore() {
-		
+	public int getScore(PlayersSuper player) {
 		int score = 0;
 		for(int i = 0; i < player.slots.length; i++) {
 			if(player.slots[i] != null && player.slots[i].cardNum != 53) {
@@ -164,20 +163,15 @@ public class CardManager {
 		return score;
 	}
 	
+	public int getPlayerScore() {
+		
+		int score = getScore(player);
+		return score;
+	}
+	
 	public int getDealerScore() {
 		
-		int score = 0;
-		for(int i = 0; i < dealer.slots.length; i++) {
-			if(dealer.slots[i] != null && dealer.slots[i].cardNum != 53) {
-				score += cards[dealer.slots[i].cardNum].value;
-				if(dealer.slots[i].cardNum == 1 || dealer.slots[i].cardNum == 14 
-						|| dealer.slots[i].cardNum == 27 || dealer.slots[i].cardNum == 40) {
-					if(score > 21) {
-						score -= 10;
-					}
-				}
-			}
-		}
+		int score = getScore(dealer);
 		return score;
 	}
 	
