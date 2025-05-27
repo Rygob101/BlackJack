@@ -2,8 +2,10 @@ package cards;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -21,13 +23,21 @@ public class CardManager {
 	public Dealer dealer = new Dealer();
 	public Card[] cards;
 	public Deck deck = new Deck();
-	Font arial_40 = new Font("Arial", Font.PLAIN, 40);
+	public Font customFont;
 	public int scale = 3;
 	public int cardHeight = 52 * scale;
 	public int cardWidth = 37 * scale;
 	
-	public CardManager(GameScreen gs) {
+	public CardManager(GameScreen gs){
 		this.gs = gs;
+		
+		try {
+			InputStream fontStream = CardManager.class.getResourceAsStream("/fonts/PressStart2P-vaV7.ttf");
+		    customFont = Font.createFont(Font.PLAIN, fontStream);
+		}catch(IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
+		customFont = customFont.deriveFont(Font.PLAIN, 35);
 		
 		cards = new Card[54];
 		loadCards();
@@ -173,7 +183,7 @@ public class CardManager {
 	
 	public void drawScores(Graphics2D g2) {
 		this.g2 = g2;
-		g2.setFont(arial_40);
+		g2.setFont(customFont);
 		g2.setColor(Color.white);
 		int x;
 		

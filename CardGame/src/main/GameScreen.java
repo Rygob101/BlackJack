@@ -41,8 +41,6 @@ public class GameScreen extends JPanel{
 		cardM.dealer.slots[0].cardNum = cardM.deck.drawCard();
 		cardM.dealer.slots[1].cardNum = 0;
 		
-		System.out.println("test");
-		
 		repaint();
 		
 //		while(true) {
