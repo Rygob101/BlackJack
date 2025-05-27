@@ -148,16 +148,24 @@ public class CardManager {
 	}
 	
 	public int getScore(PlayersSuper player) {
+		int numAces = 0;
 		int score = 0;
 		for(int i = 0; i < player.slots.length; i++) {
 			if(player.slots[i] != null && player.slots[i].cardNum != 53) {
 				score += cards[player.slots[i].cardNum].value;
 				if(player.slots[i].cardNum == 1 || player.slots[i].cardNum == 14 
 						|| player.slots[i].cardNum == 27 || player.slots[i].cardNum == 40) {
+					numAces++;
 					if(score > 21) {
 						score -= 10;
 					}
 				}
+			}
+		}
+		while (numAces > 0) {
+			if(score > 21) {
+				score -= 10;
+				numAces--;
 			}
 		}
 		return score;
