@@ -11,6 +11,7 @@ public class MouseInteract extends JComponent implements MouseListener{
 	
 	GameScreen gs;
 	
+	
 	public MouseInteract(GameScreen gs) {
 		this.gs = gs;
 		
@@ -22,18 +23,30 @@ public class MouseInteract extends JComponent implements MouseListener{
 		int mouseY = e.getY() - 30;
 		System.out.println("MouseY: " + mouseY);
 		
-		if((mouseX > gs.buttonM.hb.x && mouseX < (gs.buttonM.hb.x + gs.buttonM.hb.width)) 
+		if(gs.buttonsEnabled && (mouseX > gs.buttonM.hb.x && mouseX < (gs.buttonM.hb.x + gs.buttonM.hb.width)) // HIT BUTTON
 				&& (mouseY > gs.buttonM.hb.y && mouseY < (gs.buttonM.hb.y + gs.buttonM.hb.height))) {
 			gs.playerHit(gs.playerSlot);
+			if(gs.cardM.getPlayerScore() > 21) {
+				gs.checkWinner(gs.g2);
+				gs.buttonsEnabled = false;
+			}
 			
-		}else if ((mouseX > gs.buttonM.sb.x && mouseX < (gs.buttonM.sb.x + gs.buttonM.sb.width)) 
+		}else if (gs.buttonsEnabled && (mouseX > gs.buttonM.sb.x && mouseX < (gs.buttonM.sb.x + gs.buttonM.sb.width)) // STAND BUTTON
 				&& (mouseY > gs.buttonM.sb.y && mouseY < (gs.buttonM.sb.y + gs.buttonM.sb.height))) {
 			gs.playerStand();
-		}else if ((mouseX > 0 && mouseX < 50) 
-				&& (mouseY > 0 && mouseY < 50)) {
-			gs.runHand();
+			gs.checkWinner(gs.g2);
+			gs.buttonsEnabled = false;
+		}else if(!gs.buttonsEnabled && (mouseX > gs.buttonM.db.x && mouseX < (gs.buttonM.db.x + gs.buttonM.db.width)) // DEAL BUTTON
+				&& (mouseY > gs.buttonM.db.y && mouseY < (gs.buttonM.db.y + gs.buttonM.db.height))) {
+			if(!gs.nextHand) {
+				gs.nextHand = true;
+				gs.buttonsEnabled = true;
+				gs.runHand();
+			}else {
+				gs.nextHand = false;
+				gs.drawBlank();
+			}
 		}
-		System.out.println("Mouse Clicked!");
 	}
 
 	@Override

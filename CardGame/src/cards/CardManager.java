@@ -64,6 +64,12 @@ public class CardManager {
 		player.slots[4] = new Slot();
 		player.slots[4].y = handY;
 		player.slots[4].x = handX + 240;
+		player.slots[5] = new Slot();
+		player.slots[5].y = handY;
+		player.slots[5].x = handX + 300;
+		player.slots[6] = new Slot();
+		player.slots[6].y = handY;
+		player.slots[6].x = handX + 360;
 	}
 	
 	public void setup(int index, String imagePath, int value) {
@@ -155,11 +161,13 @@ public class CardManager {
 		for(int i = 0; i < player.slots.length; i++) {
 			if(player.slots[i].cardNum != 0 && player.slots[i].cardNum != 53) {
 				score += cards[player.slots[i].cardNum].value;
-				if(player.slots[i].cardNum == 1 || player.slots[i].cardNum == 14 
-						|| player.slots[i].cardNum == 27 || player.slots[i].cardNum == 40) {
-					if(score > 21) {
-						score -= 10;
-					}
+			}
+		}
+		for(int i = 0; i< player.slots.length; i++) {
+			if(player.slots[i].cardNum == 1 || player.slots[i].cardNum == 14 
+					|| player.slots[i].cardNum == 27 || player.slots[i].cardNum == 40) {
+				if(score > 21) {
+					score -= 10;
 				}
 			}
 		}
@@ -208,6 +216,8 @@ public class CardManager {
 		player.slots[2].x -= offset;
 		player.slots[3].x -= offset;
 		player.slots[4].x -= offset;
+		player.slots[5].x -= offset;
+		player.slots[6].x -= offset;
 	}
 	
 	public void resetSlotPositions(PlayersSuper player, int handX) {
@@ -216,5 +226,7 @@ public class CardManager {
 		player.slots[2].x = handX + 120;
 		player.slots[3].x = handX + 180;
 		player.slots[4].x = handX + 240;
+		player.slots[5].x = handX + 300;
+		player.slots[6].x = handX + 360;
 	}
 }
