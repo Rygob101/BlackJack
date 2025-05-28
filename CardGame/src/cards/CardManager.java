@@ -163,12 +163,6 @@ public class CardManager {
 				}
 			}
 		}
-//		while (numAces > 0) {
-//			if(score > 21) {
-//				score -= 10;
-//				numAces--;
-//			}
-//		}
 		return score;
 	}
 	
