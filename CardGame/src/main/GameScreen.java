@@ -74,7 +74,7 @@ public class GameScreen extends JPanel{
 		if(blackjack || dealerWins || pushWins || playerWins) {
 			if(blackjack) {
 				drawGameEndText(g2, "Blackjack!");
-				cardM.player.money = (int)(1.5 * cardM.player.bet);
+				cardM.player.money += (int)(1.5 * cardM.player.bet);
 			}else if(dealerWins) {
 				drawGameEndText(g2, "Dealer Wins!");
 			}else if(pushWins) {
