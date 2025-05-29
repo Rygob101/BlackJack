@@ -74,7 +74,6 @@ public class GameScreen extends JPanel{
 		if(blackjack || dealerWins || pushWins || playerWins) {
 			if(blackjack) {
 				drawGameEndText(g2, "Blackjack!");
-				cardM.player.money += (int)(1.5 * cardM.player.bet);
 			}else if(dealerWins) {
 				drawGameEndText(g2, "Dealer Wins!");
 			}else if(pushWins) {
@@ -155,6 +154,7 @@ public class GameScreen extends JPanel{
 		cardM.player.slots[1].cardNum = cardM.deck.drawCard();
 		if(cardM.getPlayerScore() == 21) {
 			blackjack = true;
+			checkWinner(g2);
 			buttonsEnabled = false;
 		}
 		cardM.player.slots[2].cardNum = 53;
@@ -181,11 +181,14 @@ public class GameScreen extends JPanel{
 		if(playerScore > 21 || (dealerScore > playerScore && dealerScore <= 21)) {
 			dealerWins = true;
 			cardM.player.money -= cardM.player.bet;
-		}else if(dealerScore > 21 || (dealerScore < playerScore && dealerScore <= 21)) {
+		}else if(!blackjack && (dealerScore > 21 || (dealerScore < playerScore && dealerScore <= 21))) {
 			playerWins = true;
 			cardM.player.money += cardM.player.bet;
 		}else if(dealerScore == playerScore) {
 			pushWins = true;
+		}else if(blackjack) {
+			System.out.println("Blackjack won!");
+			cardM.player.money += (int)(1.5 * cardM.player.bet);
 		}
 		repaint();
 	}
