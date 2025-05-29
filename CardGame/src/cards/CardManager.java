@@ -203,6 +203,26 @@ public class CardManager {
 		g2.drawString(Integer.toString(dScore), x, 260);
 		
 	}
+	public void drawMoney(Graphics2D g2) {
+		this.g2 = g2;
+		g2.setFont(customFont);
+		g2.setColor(Color.white);
+		int money = player.money;
+		String moneyString = "$" + Integer.toString(money);
+		// Draw player score
+		int x = getXforCenterText(moneyString);
+		g2.drawString(moneyString, (x + 290), 140);
+	}
+	public void drawBet(Graphics2D g2) {
+		this.g2 = g2;
+		g2.setFont(customFont);
+		g2.setColor(Color.white);
+		int money = player.bet;
+		String moneyString = "$" + Integer.toString(money);
+		// Draw player score
+		int x = getXforCenterText(moneyString);
+		g2.drawString(moneyString, (x + 335), 200);
+	}
 	
 	public int getXforCenterText(String text) {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();

@@ -46,6 +46,51 @@ public class MouseInteract extends JComponent implements MouseListener{
 				gs.nextHand = false;
 				gs.drawBlank();
 			}
+		}else if (!gs.buttonsEnabled && (mouseX > gs.buttonM.pm1.x && mouseX < (gs.buttonM.pm1.x + gs.buttonM.pm1.width)) 
+				&& (mouseY > gs.buttonM.pm1.y && mouseY < (gs.buttonM.pm1.y + gs.buttonM.pm1.height))) {
+			if((mouseX > gs.buttonM.pm1.x && mouseX < (gs.buttonM.pm1.x + 60)) 
+				&& (mouseY > gs.buttonM.pm1.y && mouseY < (gs.buttonM.pm1.y + gs.buttonM.pm1.height))) {
+				if(gs.cardM.player.bet > 0) {
+					gs.cardM.player.bet -= 1;
+					gs.repaint();
+				}
+			}else if ((mouseX > gs.buttonM.pm1.x + 120 && mouseX < (gs.buttonM.pm1.x + gs.buttonM.pm1.width)) 
+				&& (mouseY > gs.buttonM.pm1.y && mouseY < (gs.buttonM.pm1.y + gs.buttonM.pm1.height))) {
+				if(gs.cardM.player.bet < gs.cardM.player.money) {
+					gs.cardM.player.bet += 1;
+					gs.repaint();
+				}
+			}
+		}else if (!gs.buttonsEnabled && (mouseX > gs.buttonM.pm2.x && mouseX < (gs.buttonM.pm2.x + gs.buttonM.pm1.width)) 
+				&& (mouseY > gs.buttonM.pm2.y && mouseY < (gs.buttonM.pm2.y + gs.buttonM.pm2.height))) {
+			if((mouseX > gs.buttonM.pm2.x && mouseX < (gs.buttonM.pm2.x + 60)) 
+				&& (mouseY > gs.buttonM.pm2.y && mouseY < (gs.buttonM.pm2.y + gs.buttonM.pm2.height))) {
+				if(gs.cardM.player.bet >= 5) {
+					gs.cardM.player.bet -= 5;
+					gs.repaint();
+				}
+			}else if ((mouseX > gs.buttonM.pm2.x + 120 && mouseX < (gs.buttonM.pm2.x + gs.buttonM.pm2.width)) 
+				&& (mouseY > gs.buttonM.pm2.y && mouseY < (gs.buttonM.pm2.y + gs.buttonM.pm2.height))) {
+				if(gs.cardM.player.bet <= gs.cardM.player.money - 5) {
+					gs.cardM.player.bet += 5;
+					gs.repaint();
+				}
+			}
+		}else if (!gs.buttonsEnabled && (mouseX > gs.buttonM.pm3.x && mouseX < (gs.buttonM.pm3.x + gs.buttonM.pm1.width)) 
+				&& (mouseY > gs.buttonM.pm3.y && mouseY < (gs.buttonM.pm3.y + gs.buttonM.pm3.height))) {
+			if((mouseX > gs.buttonM.pm3.x && mouseX < (gs.buttonM.pm3.x + 60)) 
+				&& (mouseY > gs.buttonM.pm3.y && mouseY < (gs.buttonM.pm3.y + gs.buttonM.pm3.height))) {
+				if(gs.cardM.player.bet >= 10) {
+					gs.cardM.player.bet -= 10;
+					gs.repaint();
+				}
+			}else if ((mouseX > gs.buttonM.pm3.x + 120 && mouseX < (gs.buttonM.pm3.x + gs.buttonM.pm3.width)) 
+				&& (mouseY > gs.buttonM.pm3.y && mouseY < (gs.buttonM.pm3.y + gs.buttonM.pm3.height))) {
+				if(gs.cardM.player.bet <= gs.cardM.player.money - 10) {
+					gs.cardM.player.bet += 10;
+					gs.repaint();
+				}
+			}
 		}
 	}
 

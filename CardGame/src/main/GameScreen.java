@@ -66,12 +66,15 @@ public class GameScreen extends JPanel{
 		
 		
 		cardM.drawSlots(g2);
+		cardM.drawMoney(g2);
+		
 		if(nextHand) {
 			cardM.drawScores(g2);
 		}
 		if(blackjack || dealerWins || pushWins || playerWins) {
 			if(blackjack) {
 				drawGameEndText(g2, "Blackjack!");
+				cardM.player.money = (int)(1.5 * cardM.player.bet);
 			}else if(dealerWins) {
 				drawGameEndText(g2, "Dealer Wins!");
 			}else if(pushWins) {
@@ -82,6 +85,8 @@ public class GameScreen extends JPanel{
 		}
 		
 		buttonM.drawAllButtons(g2);
+		cardM.drawBet(g2);
+		
 		
 	}
 	public void playerHit(int slot){
@@ -107,6 +112,9 @@ public class GameScreen extends JPanel{
 	}
 	public void drawBlank() {
 		
+		if(cardM.player.bet > cardM.player.money) {
+			cardM.player.bet = cardM.player.money;
+		}
 		dealerWins = false;
 		playerWins = false;
 		blackjack = false;
@@ -172,16 +180,12 @@ public class GameScreen extends JPanel{
 		
 		if(playerScore > 21 || (dealerScore > playerScore && dealerScore <= 21)) {
 			dealerWins = true;
-			System.out.print("Dealer Wins!");
-			drawGameEndText(g2, "Dealer Wins");
+			cardM.player.money -= cardM.player.bet;
 		}else if(dealerScore > 21 || (dealerScore < playerScore && dealerScore <= 21)) {
 			playerWins = true;
-			System.out.print("Player Wins!");
-			drawGameEndText(g2, "Player Wins");
+			cardM.player.money += cardM.player.bet;
 		}else if(dealerScore == playerScore) {
 			pushWins = true;
-			System.out.print("Push!");
-			drawGameEndText(g2, "Push!");
 		}
 		repaint();
 	}
@@ -195,4 +199,6 @@ public class GameScreen extends JPanel{
 		g2.drawString(text, x, 320);
 		repaint();
 	}
+	
+
 }
